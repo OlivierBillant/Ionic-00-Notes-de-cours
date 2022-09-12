@@ -53,3 +53,11 @@ Création premier projet :
 - Nom du projet
 - Framework Angular
 - Blank projet
+
+L'application fonctionnera en single page application.  
+
+Préparer les déploiements sur Mobile.  
+```
+ionic capacitor add android
+ionic capacitor add ios
+```
