@@ -9,8 +9,9 @@ Une application web resposera sur Html/css/JS et un binding JS-SDKNatif. Ce sont
 <br>
 
 Apache Cordova a justement vocation à développer ce type d'applications composées d'une webapp compilée par un moteur de rendu et assisté par des plugins permettant d'accéder aux fonctions du smartphone. Communauté très dynamique dans le début des années 2010.  
-Capacitor prendra le relai de Cordova tout en resant compatible avec Cordova.
+Capacitor prendra le relai de Cordova tout en resant compatible avec Cordova.  
 
+----
 ## Installation
 Installer node.js : https://nodejs.org/en/download/
 
@@ -20,7 +21,7 @@ npm config set https-proxy http://proxy29.ad.campus-eni.fr:8080
 npm install -g @ionic/cli
 npm install -g npm@8.19.1
 ```
-
+----
 ## Présentation de Ionic
 Composé de 3 parties principales : 
 - CLI
@@ -53,6 +54,7 @@ Création premier projet :
 - Nom du projet
 - Framework Angular
 - Blank projet
+- Pas nécessaire de créer un compte ionic (fonctionnalités premium)
 
 L'application fonctionnera en single page application.  
 
@@ -60,4 +62,40 @@ Préparer les déploiements sur Mobile.
 ```
 ionic capacitor add android
 ionic capacitor add ios
+```
+
+## Angular
+### Présentation
+----
+FW JS MVC fonctionnant sous forme de Single page Application
+Basé sur TypeScript, mais devra être transpilé.  
+Enjeu de définition sur la granularité des composants.  
+Par convention, chaque composant se trouve dans son propre répertoire ou se trouveront les fichiers suivants :
+- Controlleur : ts
+- Template : html
+- Style : scss
+- Test Unitaire : spec.ts
+
+L'usage d'annotation @Component permet de rajouter des métadonnées au fichier (*e.g.*  selector)
+Le composant sera ensuite inséré en balise dans le html
+
+### Creation de composant
+----
+```
+ionic generate
+```
+- select : component
+- enter : title
+- Add component in home.module.ts to NgModule declarations : [**Homepage, COMPONENT-TO-ADD**]
+
+``` javascript
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    HomePageRoutingModule
+  ],
+  declarations: [HomePage, TitleComponent]
+})
 ```
