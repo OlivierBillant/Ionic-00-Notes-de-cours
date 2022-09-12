@@ -99,3 +99,54 @@ ionic generate
   declarations: [HomePage, TitleComponent]
 })
 ```
+
+### Lier html et TS : Interpolation
+----
+Insérer une variable dans le html {{ hello }}
+Lier la variable dans **home.page.ts**
+``` javascript
+export class HomePage {
+  hello: string = 'Hello World !!!';
+
+  constructor() {}
+}
+```
+#### Liaison par événement : Event Binding
+``` html
+ <button (click)="clickMe()">Cliquez ici</button>
+```
+``` javascript
+export class HomePage {
+  hello: string = 'Hello World !!!';
+
+  constructor() {}
+
+  clickMe(){
+    this.hello = "Phrase hello modifiée par le binding";
+  }
+}
+```
+
+#### Property Binding
+```javascript
+//Declare variable
+  isHidden: boolean = true;
+//use it in function
+clickMe(){
+    this.hello = "Phrase hello modifiée par le binding";
+    this.isHidden = !this.isHidden;
+  }
+```
+``` html
+  <div [hidden]="isHidden">Suis-je caché</div>
+```
+
+#### Liaison à double sens
+```javascript
+  name: string = "Anonyme";
+```
+``` html
+<Label>Entrez votre nom</Label>
+<input type="text" placeholder="nom" [(ngModel)]="name">
+<p>Bonjour {{ name }}</p>
+```
