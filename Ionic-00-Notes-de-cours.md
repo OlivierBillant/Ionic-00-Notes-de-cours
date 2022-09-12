@@ -46,3 +46,10 @@ Paramétrer proxy ionic :
 ``` bash
 ionic config set -g proxy http://proxy29.ad.campus-eni.fr:8080
 ```
+
+Création premier projet :
+- ionic start
+- Ne pas utiliser le wizard
+- Nom du projet
+- Framework Angular
+- Blank projet
