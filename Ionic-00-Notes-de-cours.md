@@ -92,7 +92,7 @@ Par convention, chaque composant se trouve dans son propre répertoire ou se tro
 - Style : scss
 - Test Unitaire : spec.ts
 
-L'usage d'annotation @Component permet de rajouter des métadonnées au fichier (_e.g._ selector)
+L'usage d'annotation @Component permet de rajouter des métadonnées au fichier (_e.g._ selector).  
 Le composant sera ensuite inséré en balise dans le html
 
 ### Creation de composant
@@ -185,14 +185,66 @@ name: string = "Anonyme";
 ```javascript
   fruits: string[] = ["pomme", "banane", "kiwi", "pomme", "fraise"];
 ```
+
 On insère notre js directement dans les balises
+
 ```html
 <ul>
   <li *ngFor="let fruit of fruits">{{ fruit }}</li>
 </ul>
 ```
+
 On retrouvera ainsi les directives :
+
 - ngFor
 - ngIf
 - ngSyle
 - ngClass : applique une classe css si une condition est remplie
+
+#### Utilisation d'une alerte
+
+```javascript
+export class HomePage {
+//Ajouter l'alertController au constructeur de la page
+constructor(
+    private alertController: AlertController,
+  ) {}
+//Fonction de click asynchrone
+async button_commencer_click() {
+    if (condition) {
+      //Créer une alerte grace au controller et l'hydrater
+      const alert = await this.alertController.create({
+        header: 'Erreur',
+        message: this.error_length,
+        buttons: ['OK'],
+      });
+      //Envoyer l'alerte
+      await alert.present();
+}}}
+```
+
+#### Utilisation d'un toast
+
+```javascript
+export class HomePage {
+//Ajouter le toast au constructeur de la page
+constructor(
+    private toastController: ToastController
+  ) {}
+//Fonction de click asynchrone
+ async button_reponse_click(
+  //La fonction de click doit se voir passer 2 paramètres
+  //- la position du toast
+  //- la réponse
+    position: 'top' | 'middle' | 'bottom',
+    reponse: string
+  ) {
+    const toast = await this.toastController.create({
+      //On affichera un message enrichi de la "réponse" issue du bouton
+      message: 'Votre réponse est ' + reponse,
+      duration: 1500,
+      position: position,
+    });
+    await toast.present();
+}}
+```
