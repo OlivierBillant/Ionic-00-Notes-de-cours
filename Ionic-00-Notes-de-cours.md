@@ -264,3 +264,78 @@ constructor(
     await toast.present();
 }}
 ```
+## Services
+----
+Les services seront mutualisés entre les contolleurs.  
+Ils sont concus en singleton.  
+Classes TS contenant des méthodes stateless (autonomes, ne dépendant pas de la résolution d'un autre événement).  
+Un service diposera d'un décorator 
+``` javascript
+@Injectable()
+```
+Il faut le rajouer aux tableaux des providers en angular vanilla.  
+Procédure :
+``` bash
+ionic generate
+service
+```
+Idéalement on regroupera les services dans un répertoire dédié.  
+On injecte ensuite une instance du service dans le constructeur
+``` javascript
+constructor(private rngService: RngService){}
+```
+
+Les services ne seront **jamais** instanciés directement par les controlleurs.  
+Permet d'optimiser la mémoire, Angular gerera les appels et instanciations.
+
+## Programmation asynchrone
+Un navigateur ne dispose que d'un seul thread pour tout exécuter.  
+Une méthode longue paralysera ainsi les actions du navigateur.  
+Pour palier ce problème, la programmation asynchronea été introduite.
+
+### Promise, .then, .catch...
+Côté service :
+``` javascript 
+getRandomNumber() {
+    return Math.floor(Math.random() * 100);
+  }
+
+  getRandomNumberPromise(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      resolve(Math.floor(Math.random() * 100));
+      reject(-1);
+    })
+  }
+```
+Côté controlleur TS :
+``` javascript
+// Récupération d'un nombre aléatoire du service généré de manière synchrone
+  getNumber() {    
+    this.nb = this.dataSrv.getRandomNumber();
+  }
+
+  // Récupération asynchrone d'un nombre aléatoire à travers une promise
+  // qui est ensuite traitée avec les mots-clés then et catch.
+  getNumberThen() {
+    this.dataSrv.getRandomNumberPromise().then((result: number) => {
+      this.nb = result;
+    }).catch(error => {
+      console.log(error);
+    }).finally(() => {
+      console.log("Fin !");
+    });
+  }
+
+  // Récupération asynchrone d'un nombre aléatoire à travers une promise
+  // grâce aux mots-clés async et await
+  async getNumberAsync() {
+    try {
+      this.nb = await this.dataSrv.getRandomNumberPromise();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+```
+### Async Await 
+Permettent de simplifier la gestion des promesses.  
+Traitement synchrone d'une méthode asynchrone.  
