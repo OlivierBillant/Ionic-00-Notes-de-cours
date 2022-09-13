@@ -197,10 +197,26 @@ On insère notre js directement dans les balises
 On retrouvera ainsi les directives :
 
 - ngFor
+```html
+<!-- Foreach depusi une liste déclarée côté js -->
+<ion-select interface="popover">
+  <ion-select-option *ngFor="let niveau of niveaux" value="{{niveau}}">{{niveau}}</ion-select-option>
+</ion-select>
+```
 - ngIf
-- ngSyle
+```html
+<div *ngIf="condition; else elseBlock">Content to render when condition is true.</div>
+<ng-template #elseBlock>Content to render when condition is false.</ng-template>
+```
+- ngStyle
+```html
+ <p [ngStyle]="{'color' : colorText}">Texte</p>
+```
 - ngClass : applique une classe css si une condition est remplie
-
+```html
+<!-- Ici isHidden est un Boolean -->
+<p [ngClass]="{'green': isHidden, 'orange': !isHidden}">Paragraphe</p>
+```
 #### Utilisation d'une alerte
 
 ```javascript
