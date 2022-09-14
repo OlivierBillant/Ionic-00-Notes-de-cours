@@ -339,3 +339,20 @@ Côté controlleur TS :
 ### Async Await 
 Permettent de simplifier la gestion des promesses.  
 Traitement synchrone d'une méthode asynchrone.  
+<br>
+
+## Interrogagtion d'API Rest
+----
+Ajouter à NgModule : HttpClientModule
+```javascript
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    HomePageRoutingModule
+  ],
+  declarations: [HomePage, TitleComponent]
+})
+```
+On injectera HttpClient dans notre service
