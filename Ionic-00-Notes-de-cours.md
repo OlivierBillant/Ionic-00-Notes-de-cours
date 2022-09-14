@@ -197,26 +197,38 @@ On insère notre js directement dans les balises
 On retrouvera ainsi les directives :
 
 - ngFor
+
 ```html
 <!-- Foreach depusi une liste déclarée côté js -->
 <ion-select interface="popover">
-  <ion-select-option *ngFor="let niveau of niveaux" value="{{niveau}}">{{niveau}}</ion-select-option>
+  <ion-select-option *ngFor="let niveau of niveaux" value="{{niveau}}"
+    >{{niveau}}</ion-select-option
+  >
 </ion-select>
 ```
+
 - ngIf
+
 ```html
-<div *ngIf="condition; else elseBlock">Content to render when condition is true.</div>
+<div *ngIf="condition; else elseBlock">
+  Content to render when condition is true.
+</div>
 <ng-template #elseBlock>Content to render when condition is false.</ng-template>
 ```
+
 - ngStyle
+
 ```html
- <p [ngStyle]="{'color' : colorText}">Texte</p>
+<p [ngStyle]="{'color' : colorText}">Texte</p>
 ```
+
 - ngClass : applique une classe css si une condition est remplie
+
 ```html
 <!-- Ici isHidden est un Boolean -->
 <p [ngClass]="{'green': isHidden, 'orange': !isHidden}">Paragraphe</p>
 ```
+
 #### Utilisation d'une alerte
 
 ```javascript
@@ -264,24 +276,32 @@ constructor(
     await toast.present();
 }}
 ```
+
 ## Services
-----
+
+---
+
 Les services seront mutualisés entre les contolleurs.  
 Ils sont concus en singleton.  
 Classes TS contenant des méthodes stateless (autonomes, ne dépendant pas de la résolution d'un autre événement).  
-Un service diposera d'un décorator 
-``` javascript
+Un service diposera d'un décorator
+
+```javascript
 @Injectable()
 ```
+
 Il faut le rajouer aux tableaux des providers en angular vanilla.  
 Procédure :
-``` bash
+
+```bash
 ionic generate
 service
 ```
+
 Idéalement on regroupera les services dans un répertoire dédié.  
 On injecte ensuite une instance du service dans le constructeur
-``` javascript
+
+```javascript
 constructor(private rngService: RngService){}
 ```
 
@@ -289,13 +309,16 @@ Les services ne seront **jamais** instanciés directement par les controlleurs.
 Permet d'optimiser la mémoire, Angular gerera les appels et instanciations.
 
 ## Programmation asynchrone
+
 Un navigateur ne dispose que d'un seul thread pour tout exécuter.  
 Une méthode longue paralysera ainsi les actions du navigateur.  
 Pour palier ce problème, la programmation asynchronea été introduite.
 
 ### Promise, .then, .catch...
+
 Côté service :
-``` javascript 
+
+```javascript
 getRandomNumber() {
     return Math.floor(Math.random() * 100);
   }
@@ -307,10 +330,12 @@ getRandomNumber() {
     })
   }
 ```
+
 Côté controlleur TS :
-``` javascript
+
+```javascript
 // Récupération d'un nombre aléatoire du service généré de manière synchrone
-  getNumber() {    
+  getNumber() {
     this.nb = this.dataSrv.getRandomNumber();
   }
 
@@ -336,23 +361,38 @@ Côté controlleur TS :
     }
   }
 ```
-### Async Await 
+
+### Async Await
+
 Permettent de simplifier la gestion des promesses.  
 Traitement synchrone d'une méthode asynchrone.  
 <br>
 
 ## Interrogagtion d'API Rest
-----
-Ajouter à NgModule : HttpClientModule
+
+---
+
+Ajouter à src/app/app.module.ts dans NgModule :
+
 ```javascript
+import { HttpClientModule } from "@angular/common/http";
+
 @NgModule({
+  declarations: [AppComponent],
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  declarations: [HomePage, TitleComponent]
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  bootstrap: [AppComponent],
 })
+export class AppModule {}
 ```
+
 On injectera HttpClient dans notre service
+
+```javascript
+ constructor(private http: HttpClient) {}
+```
