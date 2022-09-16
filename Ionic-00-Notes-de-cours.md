@@ -398,37 +398,45 @@ On injectera HttpClient dans notre service
 ```
 
 ## Observables
-----
+
+---
+
 https://www.learnrxjs.io/
 
 ## Navigation
-----
+
+---
+
 Utilisation de App.routing-module.ts  
 Il contiendra un tableau de routes.
 
-``` bash
+```bash
 ionic generate
 page
 ```
-Injecter le service Router dans un controlleur TS pour naviguer entre les pages. 
+
+Injecter le service Router dans un controlleur TS pour naviguer entre les pages.
 
 ### Transférer des données entre les pages
+
 Dans app routing module
-Préciser si elle pourra prendre des variables 
-``` javascript
-path: '/about/:name'
+Préciser si elle pourra prendre des variables
+
+```javascript
+path: "/about/:name";
 ```
 
 Avec [routerLink] naviger via le html
 
-Dans le controller pour naviguer par le js : 
+Dans le controller pour naviguer par le js :
 fonction navigate :
 
-Toutefois, préciser qu'une route prend un paramètre oblige à le passer. Si on veut maintenir la route précédente, il faudra la dupliquer.
-
+Toutefois, préciser qu'une route prend un paramètre oblige à le passer.  
+Si on veut maintenir la route précédente, il faudra la dupliquer.
 
 Service ActivatedRoute dans la page cible permet de récupérer les parametres passés.
-``` javascript
+
+```javascript
 export class AboutPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) { }
   ngOnInit() {
@@ -443,23 +451,52 @@ A partir d'un observable
 ou directement via .snapshot.params.el
 
 ## Genetation d'apk
-----
-``` bash
+
+---
+
+```bash
 ionic cap add android
 ionic cap add ios
 ionic cap sync
 ionic cap open
 ```
+
 Puis build apk et run.
 
 ## Interraction avec les modules natifs et surcouche ionic native
-----
+
+---
+
 Les plugins cordova sont en js pure. Ionic propose donc uen surcouche ionic native utilisable en Angular/TS.  
 On trouvera plusieurs centaines de plugin
+
 - Installer le plugin capacitor
 - Importer le module Angular correspondant
-- Enregist
+- Enregistrer le module
 - Injecter le service
-``` bash
+  Ici exemple avec le module Preference dans un service injectable
 
+```javascript
+import { Injectable } from "@angular/core";
+import { Preferences } from "@capacitor/preferences";
+import { Infos } from "../Models/infos";
+
+@Injectable({
+  providedIn: "root",
+})
+export class PreferencesService {
+  constructor() {}
+
+  setInfos = async (infos: Infos) => {
+    await Preferences.set({
+      key: "infos",
+      value: JSON.stringify(infos),
+    });
+  };
+  getInfos = async () => {
+    const { value } = await Preferences.get({ key: "infos" });
+    console.log(`Hello ${value}!`);
+    return value;
+  };
+}
 ```
