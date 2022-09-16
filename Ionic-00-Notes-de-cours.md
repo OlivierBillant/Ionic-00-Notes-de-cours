@@ -452,6 +452,12 @@ ionic cap open
 ```
 Puis build apk et run.
 
+## Sur mac
+Il faut installer cocoapods qui ne permettait pas la synchornisation.
+```bash
+brew install cocoapods
+```
+
 ## Interraction avec les modules natifs et surcouche ionic native
 ----
 Les plugins cordova sont en js pure. Ionic propose donc uen surcouche ionic native utilisable en Angular/TS.  
